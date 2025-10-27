@@ -1,21 +1,19 @@
 package core.basesyntax.strategy.operations;
 
-import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
 import java.util.Map;
 
 public class ReturnOperation implements OperationHandler {
-    private Map<String, Integer> storage = Storage.getCurrentStorage();
 
     @Override
-    public void apply(FruitTransaction transaction) {
+    public void apply(FruitTransaction transaction, Map<String, Integer> processedData) {
         if (transaction.getQuantity() > 0) {
-            if (storage.containsKey(transaction.getFruit())) {
-                int currentQuantity = storage.get(transaction.getFruit());
-                storage.replace(
+            if (processedData.containsKey(transaction.getFruit())) {
+                int currentQuantity = processedData.get(transaction.getFruit());
+                processedData.replace(
                         transaction.getFruit(), (currentQuantity + transaction.getQuantity()));
             } else {
-                storage.put(transaction.getFruit(), transaction.getQuantity());
+                processedData.put(transaction.getFruit(), transaction.getQuantity());
             }
         } else {
             throw new RuntimeException(

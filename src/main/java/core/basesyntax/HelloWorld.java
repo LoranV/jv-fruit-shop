@@ -27,8 +27,8 @@ import java.util.Map;
  */
 public class HelloWorld {
     public static void main(String[] args) {
-        Reader reader = new ReaderImpl("src/main/resources/reportToRead.csv");
-        List<String> list = reader.read();
+        Reader reader = new ReaderImpl();
+        List<String> list = reader.read("src/main/resources/reportToRead.csv");
 
         // 3. Create and feel the map with all OperationHandler implementations
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = new HashMap<>();
@@ -44,13 +44,13 @@ public class HelloWorld {
 
         // 4. Process the incoming transactions with applicable OperationHandler implementations
         ShopService shopService = new ShopServiceImpl(operationStrategy);
-        shopService.process(transactions);
+        Map<String, Integer> processedData = shopService.process(transactions);
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
-        String resultingReport = reportGenerator.getReport();
+        String resultingReport = reportGenerator.getReport(processedData);
 
         // 6. Write the received report into the destination file
-        Writer fileWriter = new WriterImpl("src/main/resources/finalReport.csv");
-        fileWriter.write(resultingReport);
+        Writer fileWriter = new WriterImpl();
+        fileWriter.write(resultingReport, "src/main/resources/finalReport.csv");
 
     }
 
