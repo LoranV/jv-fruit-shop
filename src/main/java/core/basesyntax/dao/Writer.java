@@ -1,5 +1,5 @@
 package core.basesyntax.dao;
 
-public interface DBWriter {
+public interface Writer {
     boolean write(String text);
 }

@@ -1,11 +1,10 @@
 package core.basesyntax.services;
 
 import core.basesyntax.model.FruitTransaction;
-
 import java.util.List;
 
 public class ShopServiceImpl implements ShopService {
-    OperationStrategy operationStrategy;
+    private final OperationStrategy operationStrategy;
 
     public ShopServiceImpl(OperationStrategy operationStrategy) {
         this.operationStrategy = operationStrategy;

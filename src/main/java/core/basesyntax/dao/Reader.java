@@ -2,6 +2,6 @@ package core.basesyntax.dao;
 
 import java.util.List;
 
-public interface DBReader {
+public interface Reader {
     List<String> read();
 }

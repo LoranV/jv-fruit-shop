@@ -1,20 +1,17 @@
 package core.basesyntax.dao;
+
 import java.io.File;
 import java.io.FileWriter;
-import java.io.BufferedWriter;
 import java.io.IOException;
 
-public class DBWriterImpl  implements DBWriter {
-    File fileName;
-    FileWriter fw;
-    BufferedWriter bw;
+public class WriterImpl implements Writer {
+    private File fileName;
+    private final FileWriter fw;
 
-    public DBWriterImpl(String textName) {
+    public WriterImpl(String textName) {
         File file = new File(textName);
-        try
-        {
+        try {
             fw = new FileWriter(file);
-            bw =  new BufferedWriter(fw);
         } catch (IOException e) {
             throw new RuntimeException("Can't open file: " + fileName + e);
         }

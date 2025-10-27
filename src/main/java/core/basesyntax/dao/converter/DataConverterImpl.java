@@ -1,12 +1,10 @@
 package core.basesyntax.dao.converter;
 
 import core.basesyntax.model.FruitTransaction;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataConverterImpl implements DataConverter {
-    FruitTransaction fruitTransaction = new FruitTransaction();
     @Override
     public List<FruitTransaction> convertToTransaction(List<String> list) {
         List<FruitTransaction> fruitTransactionList = new ArrayList<>();
@@ -23,6 +21,7 @@ public class DataConverterImpl implements DataConverter {
         }
         return fruitTransactionList;
     }
+
     @Override
     public FruitTransaction.Operation convertToOperation(String code) {
         return switch (code) {
