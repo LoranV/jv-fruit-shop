@@ -1,14 +1,14 @@
 package core.basesyntax.services.impl;
 
+import core.basesyntax.db.Storage;
 import core.basesyntax.services.ReportGenerator;
-import core.basesyntax.storage.Storage;
 import java.util.Map;
 
 public class ReportGeneratorImpl implements ReportGenerator {
     @Override
     public String getReport() {
         String header = "fruit,quantity\n";
-        Map<String, Integer> storage = Storage.getCurrent_storage();
+        Map<String, Integer> storage = Storage.getCurrentStorage();
         StringBuilder sb = new StringBuilder();
         sb.append(header);
         for (Map.Entry<String, Integer> entry : storage.entrySet()) {

@@ -1,8 +1,8 @@
 package core.basesyntax.services.impl;
 
 import core.basesyntax.model.FruitTransaction;
-import core.basesyntax.services.OperationStrategy;
 import core.basesyntax.services.ShopService;
+import core.basesyntax.strategy.OperationStrategy;
 import java.util.List;
 
 public class ShopServiceImpl implements ShopService {
@@ -15,7 +15,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public void process(List<FruitTransaction> fruitTransactions) {
         for (FruitTransaction fruitTransaction : fruitTransactions) {
-            operationStrategy.get(fruitTransaction.getOperation()).getOperation(fruitTransaction);
+            operationStrategy.get(fruitTransaction.getOperation()).apply(fruitTransaction);
         }
     }
 }

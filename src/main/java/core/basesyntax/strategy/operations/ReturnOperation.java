@@ -1,14 +1,14 @@
-package core.basesyntax.services.operations;
+package core.basesyntax.strategy.operations;
 
+import core.basesyntax.db.Storage;
 import core.basesyntax.model.FruitTransaction;
-import core.basesyntax.storage.Storage;
 import java.util.Map;
 
 public class ReturnOperation implements OperationHandler {
-    private Map<String, Integer> storage = Storage.getCurrent_storage();
+    private Map<String, Integer> storage = Storage.getCurrentStorage();
 
     @Override
-    public void getOperation(FruitTransaction transaction) {
+    public void apply(FruitTransaction transaction) {
         if (transaction.getQuantity() > 0) {
             if (storage.containsKey(transaction.getFruit())) {
                 int currentQuantity = storage.get(transaction.getFruit());
