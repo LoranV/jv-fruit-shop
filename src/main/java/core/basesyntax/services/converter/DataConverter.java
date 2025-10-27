@@ -1,4 +1,4 @@
-package core.basesyntax.dao.converter;
+package core.basesyntax.services.converter;
 
 import core.basesyntax.model.FruitTransaction;
 import java.util.List;

@@ -1,4 +1,4 @@
-package core.basesyntax.dao.converter;
+package core.basesyntax.services.converter;
 
 import core.basesyntax.model.FruitTransaction;
 import java.util.ArrayList;
@@ -12,12 +12,16 @@ public class DataConverterImpl implements DataConverter {
         String fruit;
         int amount;
         String[] values;
-        for (String string : list) {
-            values = string.split(",");
-            operation = (convertToOperation(values[0]));
-            fruit = values[1];
-            amount = Integer.parseInt(values[2]);
-            fruitTransactionList.add(new FruitTransaction(operation, fruit, amount));
+        try {
+            for (String string : list) {
+                values = string.split(",");
+                operation = (convertToOperation(values[0]));
+                fruit = values[1];
+                amount = Integer.parseInt(values[2]);
+                fruitTransactionList.add(new FruitTransaction(operation, fruit, amount));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid data", e);
         }
         return fruitTransactionList;
     }

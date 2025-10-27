@@ -1,5 +1,6 @@
-package core.basesyntax.dao;
+package core.basesyntax.services.impl;
 
+import core.basesyntax.services.Reader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,13 +11,12 @@ import java.util.List;
 
 public class ReaderImpl implements Reader {
     private File fileName;
-    private final BufferedReader bf;
+    private FileReader reader;
 
     public ReaderImpl(String fileName) {
         File file = new File(fileName);
         try {
-            FileReader reader = new FileReader(file);
-            bf = new BufferedReader(reader);
+            reader = new FileReader(file);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Can't open file " + fileName, e);
         }
@@ -25,7 +25,7 @@ public class ReaderImpl implements Reader {
     @Override
     public List<String> read() {
         List<String> list = new ArrayList<>();
-        try {
+        try (BufferedReader bf = new BufferedReader(reader)) {
             String header = bf.readLine();
             String line = bf.readLine();
             while (line != null) {
@@ -33,7 +33,7 @@ public class ReaderImpl implements Reader {
                 line = bf.readLine();
             }
         } catch (IOException e) {
-            System.out.println("Error while reading file " + fileName);
+            throw new RuntimeException("Error while reading file " + fileName, e);
         }
         return list;
     }

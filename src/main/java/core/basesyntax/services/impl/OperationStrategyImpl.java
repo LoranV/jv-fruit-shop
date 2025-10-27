@@ -1,6 +1,7 @@
-package core.basesyntax.services;
+package core.basesyntax.services.impl;
 
 import core.basesyntax.model.FruitTransaction;
+import core.basesyntax.services.OperationStrategy;
 import core.basesyntax.services.operations.OperationHandler;
 import java.util.Map;
 

@@ -1,18 +1,18 @@
 package core.basesyntax;
 
-import core.basesyntax.dao.Reader;
-import core.basesyntax.dao.ReaderImpl;
-import core.basesyntax.dao.Writer;
-import core.basesyntax.dao.WriterImpl;
-import core.basesyntax.dao.converter.DataConverter;
-import core.basesyntax.dao.converter.DataConverterImpl;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.services.OperationStrategy;
-import core.basesyntax.services.OperationStrategyImpl;
+import core.basesyntax.services.Reader;
 import core.basesyntax.services.ReportGenerator;
-import core.basesyntax.services.ReportGeneratorImpl;
 import core.basesyntax.services.ShopService;
-import core.basesyntax.services.ShopServiceImpl;
+import core.basesyntax.services.Writer;
+import core.basesyntax.services.converter.DataConverter;
+import core.basesyntax.services.converter.DataConverterImpl;
+import core.basesyntax.services.impl.OperationStrategyImpl;
+import core.basesyntax.services.impl.ReaderImpl;
+import core.basesyntax.services.impl.ReportGeneratorImpl;
+import core.basesyntax.services.impl.ShopServiceImpl;
+import core.basesyntax.services.impl.WriterImpl;
 import core.basesyntax.services.operations.BalanceOperation;
 import core.basesyntax.services.operations.OperationHandler;
 import core.basesyntax.services.operations.PurchaseOperation;
@@ -27,8 +27,7 @@ import java.util.Map;
  */
 public class HelloWorld {
     public static void main(String[] args) {
-        Reader reader = new ReaderImpl(
-                "src/main/java/core/basesyntax/resources/reportToRead.csv");
+        Reader reader = new ReaderImpl("src/main/resources/reportToRead.csv");
         List<String> list = reader.read();
 
         // 3. Create and feel the map with all OperationHandler implementations
@@ -41,17 +40,16 @@ public class HelloWorld {
 
         //
         DataConverter converter = new DataConverterImpl();
-        List<FruitTransaction> listoftransaction = converter.convertToTransaction(list);
+        List<FruitTransaction> transactions = converter.convertToTransaction(list);
 
         // 4. Process the incoming transactions with applicable OperationHandler implementations
         ShopService shopService = new ShopServiceImpl(operationStrategy);
-        shopService.process(listoftransaction);
+        shopService.process(transactions);
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
         String resultingReport = reportGenerator.getReport();
 
         // 6. Write the received report into the destination file
-        Writer fileWriter = new WriterImpl(
-                "src/main/java/core/basesyntax/resources/finalReport.csv");
+        Writer fileWriter = new WriterImpl("src/main/resources/finalReport.csv");
         fileWriter.write(resultingReport);
 
     }
