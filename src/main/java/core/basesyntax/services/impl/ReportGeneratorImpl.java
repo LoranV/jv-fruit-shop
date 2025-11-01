@@ -6,14 +6,16 @@ import java.util.Map;
 public class ReportGeneratorImpl implements ReportGenerator {
     @Override
     public String getReport(Map<String, Integer> transactions) {
-        String header = "fruit,quantity\n";
+        final String String_Separator = ",";
+        final String Header = "fruit,quantity";
         StringBuilder sb = new StringBuilder();
-        sb.append(header);
+        sb.append(Header);
+        sb.append(System.lineSeparator());
         for (Map.Entry<String, Integer> entry : transactions.entrySet()) {
             sb.append(entry.getKey())
-                    .append(",")
+                    .append(String_Separator)
                     .append(entry.getValue())
-                    .append("\n");
+                    .append(System.lineSeparator());
         }
         return sb.toString();
     }

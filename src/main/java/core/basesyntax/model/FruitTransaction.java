@@ -5,11 +5,8 @@ public class FruitTransaction {
     private String fruit;
     private int quantity;
 
-    public FruitTransaction() {
-    }
-
-    public FruitTransaction(Operation operation, String fruit, int quantity) {
-        this.operation = operation;
+    public FruitTransaction(String operation, String fruit, int quantity) {
+        this.operation = Operation.getOperation(operation);
         this.fruit = fruit;
         this.quantity = quantity;
     }
@@ -44,14 +41,20 @@ public class FruitTransaction {
         PURCHASE("p"),
         RETURN("r");
 
-        private String code;
+        private final String code;
 
         Operation(String code) {
             this.code = code;
         }
 
-        public String getCode() {
-            return code;
+        public static Operation getOperation(String operation) {
+            return switch (operation) {
+                case "b" -> FruitTransaction.Operation.BALANCE;
+                case "s" -> FruitTransaction.Operation.SUPPLY;
+                case "p" -> FruitTransaction.Operation.PURCHASE;
+                case "r" -> FruitTransaction.Operation.RETURN;
+                default -> throw new RuntimeException("Unknown operation");
+            };
         }
     }
 }

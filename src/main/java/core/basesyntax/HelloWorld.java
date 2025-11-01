@@ -28,9 +28,9 @@ import java.util.Map;
 public class HelloWorld {
     public static void main(String[] args) {
         Reader reader = new ReaderImpl();
-        List<String> list = reader.read("src/main/resources/reportToRead.csv");
+        final String inputFile = "src/main/resources/reportToRead.csv";
+        final String outputFile = "src/main/resources/finalReport.csv";
 
-        // 3. Create and feel the map with all OperationHandler implementations
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = new HashMap<>();
         operationHandlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
         operationHandlers.put(FruitTransaction.Operation.PURCHASE, new PurchaseOperation());
@@ -38,19 +38,17 @@ public class HelloWorld {
         operationHandlers.put(FruitTransaction.Operation.SUPPLY, new SupplyOperation());
         OperationStrategy operationStrategy = new OperationStrategyImpl(operationHandlers);
 
-        //
         DataConverter converter = new DataConverterImpl();
-        List<FruitTransaction> transactions = converter.convertToTransaction(list);
+        List<FruitTransaction> transactions =
+                converter.convertToTransaction(reader.read(inputFile));
 
-        // 4. Process the incoming transactions with applicable OperationHandler implementations
         ShopService shopService = new ShopServiceImpl(operationStrategy);
         Map<String, Integer> processedData = shopService.process(transactions);
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
         String resultingReport = reportGenerator.getReport(processedData);
 
-        // 6. Write the received report into the destination file
         Writer fileWriter = new WriterImpl();
-        fileWriter.write(resultingReport, "src/main/resources/finalReport.csv");
+        fileWriter.write(resultingReport, outputFile);
 
     }
 
