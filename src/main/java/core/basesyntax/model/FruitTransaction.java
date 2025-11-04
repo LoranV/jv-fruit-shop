@@ -47,14 +47,17 @@ public class FruitTransaction {
             this.code = code;
         }
 
+        public String getCode() {
+            return code;
+        }
+
         public static Operation getOperation(String operation) {
-            return switch (operation) {
-                case "b" -> FruitTransaction.Operation.BALANCE;
-                case "s" -> FruitTransaction.Operation.SUPPLY;
-                case "p" -> FruitTransaction.Operation.PURCHASE;
-                case "r" -> FruitTransaction.Operation.RETURN;
-                default -> throw new RuntimeException("Unknown operation");
-            };
+            for (Operation value : Operation.values()) {
+                if (value.getCode().equals(operation)) {
+                    return value;
+                }
+            }
+            throw new IllegalArgumentException(operation + " operation doesn't exist.");
         }
     }
 }

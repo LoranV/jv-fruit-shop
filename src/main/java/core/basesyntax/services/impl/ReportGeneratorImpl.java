@@ -4,10 +4,11 @@ import core.basesyntax.services.ReportGenerator;
 import java.util.Map;
 
 public class ReportGeneratorImpl implements ReportGenerator {
+    static final String String_Separator = ",";
+    static final String Header = "fruit,quantity";
+
     @Override
     public String getReport(Map<String, Integer> transactions) {
-        final String String_Separator = ",";
-        final String Header = "fruit,quantity";
         StringBuilder sb = new StringBuilder();
         sb.append(Header);
         sb.append(System.lineSeparator());

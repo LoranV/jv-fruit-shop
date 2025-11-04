@@ -26,10 +26,11 @@ import java.util.Map;
  * Feel free to remove this class and create your own.
  */
 public class HelloWorld {
+    static final String inputFile = "src/main/resources/reportToRead.csv";
+    static final String outputFile = "src/main/resources/finalReport.csv";
+
     public static void main(String[] args) {
         Reader reader = new ReaderImpl();
-        final String inputFile = "src/main/resources/reportToRead.csv";
-        final String outputFile = "src/main/resources/finalReport.csv";
 
         Map<FruitTransaction.Operation, OperationHandler> operationHandlers = new HashMap<>();
         operationHandlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
